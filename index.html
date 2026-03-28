@@ -265,7 +265,7 @@ body {
 <div id="ai-thinking"><span class="dots">🤔 Calculating</span></div>
 
 <div id="worksheet">
-  <h2>📝 Maths Homework — Year 6</h2>
+  <h2>📝 Maths Homework — Year 7</h2>
   <div class="question">1) 247 + 389 = <input class="answer-box" id="q1" readonly placeholder="____"></div>
   <div class="question">2) 15 × 14 = <input class="answer-box" id="q2" readonly placeholder="____"></div>
   <div class="question">3) 864 ÷ 12 = <input class="answer-box" id="q3" readonly placeholder="____"></div>
@@ -275,7 +275,7 @@ body {
 </div>
 
 <div id="teacher-section">
-  <div id="teacher-label">Hand it to Mr. Johnson 👇</div>
+  <div id="teacher-label">Hand it to Mr. Amin 👇</div>
   <div id="click-hint">(click him)</div>
   <!-- Teacher SVG: black curly hair, brown skin, suit -->
   <svg id="teacher-svg" width="130" height="200" viewBox="0 0 130 200" xmlns="http://www.w3.org/2000/svg" onclick="showHandIn()">
@@ -344,6 +344,20 @@ body {
 <div id="speech-bubble">⭐ Well done!! ⭐</div>
 <div id="carrot">🥕</div>
 
+<button id="reset-btn" onclick="resetPage()" style="
+  margin-top: 40px;
+  background: #888;
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 28px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #555;
+  transition: transform 0.1s, box-shadow 0.1s;
+">🔄 Reset</button>
+
 <script>
 const answers = ['636', '210', '72', '563', '529', '7/8'];
 const ids = ['q1','q2','q3','q4','q5','q6'];
@@ -398,6 +412,28 @@ function handIn() {
   setTimeout(() => {
     document.getElementById('carrot').classList.add('show');
   }, 600);
+}
+
+function resetPage() {
+  // Clear answers
+  ids.forEach(id => {
+    const box = document.getElementById(id);
+    box.value = '';
+    box.classList.remove('filling');
+  });
+  // Reset AI
+  aiDone = false;
+  document.getElementById('ai-logo').style.pointerEvents = 'auto';
+  document.getElementById('ai-thinking').classList.remove('show');
+  // Reset teacher section
+  document.getElementById('teacher-section').classList.remove('show');
+  document.getElementById('click-hint').style.display = 'block';
+  document.getElementById('handin-btn').classList.remove('show');
+  document.getElementById('handin-btn').style.display = '';
+  teacherClicked = false;
+  // Reset ending
+  document.getElementById('speech-bubble').classList.remove('show');
+  document.getElementById('carrot').classList.remove('show');
 }
 </script>
 </body>
