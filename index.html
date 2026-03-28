@@ -280,17 +280,22 @@ body {
 
 <div id="homework-due">📚 HOMEWORK DUE! 📚</div>
 
-<div id="arrow-row">
-  <div id="arrow">👉</div>
-  <div id="ai-logo" onclick="startAI()">
-    <svg width="90" height="90" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+<div style="font-family:'Fredoka One',cursive; font-size:clamp(1.2rem,4vw,1.8rem); color:#22aa44; text-align:center; margin: 6px 0 2px; text-shadow: 2px 2px 0 #116622;">
+  🧠 Use your brain — you've got this!
+</div>
+<div style="font-size:1rem; color:#666; text-align:center; margin-bottom:16px;">Answer the questions below. Mr. Amin is watching. 👀</div>
+
+<div id="ai-section" style="margin: 0 0 16px; text-align:center;">
+  <div style="font-size:0.85rem; color:#aaa; margin-bottom:6px;">⚠️ Only for if you're completely stuck (Mr. Amin will know)</div>
+  <div id="ai-logo" onclick="startAI()" style="display:inline-flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; opacity:0.55; filter:grayscale(0.4); transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+    <svg width="60" height="60" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
       <circle cx="45" cy="45" r="42" fill="#1a1a2e" stroke="#5533ff" stroke-width="3"/>
       <text x="45" y="52" text-anchor="middle" font-size="36" fill="#00eaff">🤖</text>
       <circle r="5" fill="#ff44aa">
         <animateMotion dur="2s" repeatCount="indefinite" path="M 45 8 A 37 37 0 1 1 44.9 8"/>
       </circle>
     </svg>
-    <div id="ai-logo-label">A·I·™</div>
+    <div style="font-family:'Fredoka One',cursive; font-size:1rem; color:#aaa; letter-spacing:2px;">A·I·™</div>
   </div>
 </div>
 
@@ -459,14 +464,15 @@ function checkAnswers() {
   const msg = document.getElementById('result-msg');
   if (correct === questions.length) {
     allCorrect = true;
-    msg.textContent = '🎉 All correct!';
+    msg.textContent = aiUsed ? '✅ All correct!' : '🧠🎉 Amazing — you did it with your own brain!!';
     msg.style.color = '#22aa44';
+    msg.style.fontSize = aiUsed ? '1.2rem' : '1.35rem';
     document.getElementById('teacher-section').classList.add('show');
   } else if (correct > 0) {
-    msg.textContent = `${correct} / ${questions.length} correct — keep trying!`;
+    msg.textContent = `${correct} / ${questions.length} correct — nearly there, keep thinking! 💪`;
     msg.style.color = '#cc6600';
   } else {
-    msg.textContent = `Hmm, try again!`;
+    msg.textContent = `Not quite — have another go, you can do it! 🧠`;
     msg.style.color = '#cc0000';
   }
 }
@@ -484,8 +490,8 @@ function handIn() {
   const reward = document.getElementById('reward');
 
   if (!aiUsed) {
-    bubble.textContent = '⭐ Well done!! You did it yourself! ⭐';
-    reward.textContent = '🍫';
+    bubble.textContent = '🌟 Brilliant!! You used your own brain — I\'m so proud! 🌟';
+    reward.textContent = '🍫🎉';
   } else {
     bubble.textContent = '🙄 Use your brain next time!';
     reward.textContent = '🥕';
