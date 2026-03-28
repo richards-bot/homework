@@ -19,7 +19,6 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== HOMEWORK DUE ===== */
 #homework-due {
   font-family: 'Fredoka One', cursive;
   font-size: clamp(3rem, 10vw, 7rem);
@@ -34,7 +33,6 @@ body {
   50% { transform: scale(1.04); }
 }
 
-/* ===== ARROW + AI LOGO ===== */
 #arrow-row {
   display: flex;
   align-items: center;
@@ -68,13 +66,12 @@ body {
   letter-spacing: 2px;
 }
 
-/* ===== WORKSHEET ===== */
 #worksheet {
   background: white;
   border: 3px solid #ccc;
   border-radius: 12px;
   padding: 24px 32px;
-  width: min(500px, 95vw);
+  width: min(520px, 95vw);
   margin: 24px 0;
   box-shadow: 4px 4px 0 #ccc;
 }
@@ -95,28 +92,46 @@ body {
   font-weight: 700;
   color: #222;
 }
+.question-text {
+  min-width: 200px;
+}
 .answer-box {
-  flex: 1;
-  border: none;
-  border-bottom: 2px solid #999;
-  background: transparent;
-  font-size: 1.15rem;
+  width: 90px;
+  border: 2px solid #999;
+  border-radius: 6px;
+  background: #fafafa;
+  font-size: 1.1rem;
   font-family: 'Nunito', sans-serif;
   font-weight: 900;
-  color: #2244cc;
-  padding: 2px 6px;
-  min-width: 80px;
-  transition: color 0.3s;
+  color: #222;
+  padding: 4px 8px;
+  text-align: center;
+  transition: border-color 0.2s, background 0.2s;
 }
-.answer-box.filling {
-  color: #2244cc;
-  animation: typeBlink 0.15s step-end infinite;
+.answer-box:focus {
+  outline: none;
+  border-color: #5533ff;
+  background: #f0eeff;
 }
-@keyframes typeBlink {
-  50% { opacity: 0.4; }
+.answer-box.correct {
+  border-color: #22aa44;
+  background: #e8ffee;
+  color: #22aa44;
+}
+.answer-box.wrong {
+  border-color: #cc0000;
+  background: #fff0f0;
+  color: #cc0000;
+}
+.answer-box.ai-filled {
+  color: #5533ff;
+  border-color: #5533ff;
+  background: #f0eeff;
 }
 
-/* ===== AI THINKING OVERLAY ===== */
+.tick { color: #22aa44; font-size: 1.3rem; display: none; }
+.cross { color: #cc0000; font-size: 1.3rem; display: none; }
+
 #ai-thinking {
   display: none;
   text-align: center;
@@ -138,6 +153,30 @@ body {
   100% { content: ''; }
 }
 
+#check-btn {
+  background: #5533ff;
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.3rem;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 28px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #3311cc;
+  transition: transform 0.1s, box-shadow 0.1s;
+  margin: 8px 0 4px;
+}
+#check-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #3311cc; }
+#check-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #3311cc; }
+
+#result-msg {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem;
+  margin: 8px 0;
+  min-height: 1.5rem;
+  text-align: center;
+}
+
 /* ===== TEACHER ===== */
 #teacher-section {
   display: none;
@@ -152,19 +191,15 @@ body {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
 #teacher-label {
   font-family: 'Fredoka One', cursive;
   font-size: 1.1rem;
   color: #555;
   margin-bottom: -8px;
 }
-
-#teacher-svg {
-  cursor: pointer;
-  transition: transform 0.2s;
-}
+#teacher-svg { cursor: pointer; transition: transform 0.2s; }
 #teacher-svg:hover { transform: scale(1.06); }
+#click-hint { font-size: 0.95rem; color: #888; font-style: italic; margin-top: -8px; }
 
 #handin-btn {
   display: none;
@@ -184,7 +219,6 @@ body {
 #handin-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #166630; }
 #handin-btn.show { display: block; }
 
-/* ===== SPEECH BUBBLE ===== */
 #speech-bubble {
   display: none;
   position: relative;
@@ -214,137 +248,18 @@ body {
   to { transform: scale(1); opacity: 1; }
 }
 
-/* ===== CARROT ===== */
-#carrot {
+#reward {
   display: none;
   font-size: 5rem;
-  animation: carrotBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, spin 1s ease 0.6s forwards;
+  animation: rewardBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
-#carrot.show { display: block; }
-@keyframes carrotBounce {
+#reward.show { display: block; }
+@keyframes rewardBounce {
   from { transform: scale(0) rotate(-30deg); opacity: 0; }
   to { transform: scale(1) rotate(0deg); opacity: 1; }
 }
-@keyframes spin {
-  0% { transform: rotate(0); }
-  25% { transform: rotate(20deg); }
-  75% { transform: rotate(-20deg); }
-  100% { transform: rotate(0); }
-}
 
-#click-hint {
-  font-size: 0.95rem;
-  color: #888;
-  font-style: italic;
-  margin-top: -8px;
-}
-</style>
-</head>
-<body>
-
-<div id="homework-due">📚 HOMEWORK DUE! 📚</div>
-
-<div id="arrow-row">
-  <div id="arrow">👉</div>
-  <div id="ai-logo" onclick="startAI()">
-    <svg width="90" height="90" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
-      <!-- Glowing circle -->
-      <circle cx="45" cy="45" r="42" fill="#1a1a2e" stroke="#5533ff" stroke-width="3"/>
-      <!-- Brain-like squiggle -->
-      <text x="45" y="52" text-anchor="middle" font-size="36" fill="#00eaff">🤖</text>
-      <!-- Orbiting dot -->
-      <circle r="5" fill="#ff44aa">
-        <animateMotion dur="2s" repeatCount="indefinite"
-          path="M 45 8 A 37 37 0 1 1 44.9 8"/>
-      </circle>
-    </svg>
-    <div id="ai-logo-label">A·I·™</div>
-  </div>
-</div>
-
-<div id="ai-thinking"><span class="dots">🤔 Calculating</span></div>
-
-<div id="worksheet">
-  <h2>📝 Maths Homework — Year 7</h2>
-  <div class="question">1) 247 + 389 = <input class="answer-box" id="q1" readonly placeholder="____"></div>
-  <div class="question">2) 15 × 14 = <input class="answer-box" id="q2" readonly placeholder="____"></div>
-  <div class="question">3) 864 ÷ 12 = <input class="answer-box" id="q3" readonly placeholder="____"></div>
-  <div class="question">4) 1000 − 437 = <input class="answer-box" id="q4" readonly placeholder="____"></div>
-  <div class="question">5) 23² = <input class="answer-box" id="q5" readonly placeholder="____"></div>
-  <div class="question">6) 3/4 + 1/8 = <input class="answer-box" id="q6" readonly placeholder="____"></div>
-</div>
-
-<div id="teacher-section">
-  <div id="teacher-label">Hand it to Mr. Amin 👇</div>
-  <div id="click-hint">(click him)</div>
-  <!-- Teacher SVG: black curly hair, brown skin, suit -->
-  <svg id="teacher-svg" width="130" height="200" viewBox="0 0 130 200" xmlns="http://www.w3.org/2000/svg" onclick="showHandIn()">
-    <!-- Curly hair (back, black) -->
-    <ellipse cx="65" cy="48" rx="32" ry="30" fill="#1a0a00"/>
-    <!-- Curly hair bumps -->
-    <circle cx="40" cy="32" r="10" fill="#1a0a00"/>
-    <circle cx="52" cy="26" r="10" fill="#1a0a00"/>
-    <circle cx="65" cy="24" r="10" fill="#1a0a00"/>
-    <circle cx="78" cy="26" r="10" fill="#1a0a00"/>
-    <circle cx="90" cy="32" r="10" fill="#1a0a00"/>
-    <circle cx="38" cy="44" r="9" fill="#1a0a00"/>
-    <circle cx="92" cy="44" r="9" fill="#1a0a00"/>
-    <!-- Face (slightly brown skin) -->
-    <ellipse cx="65" cy="58" rx="26" ry="28" fill="#c68642"/>
-    <!-- Eyes -->
-    <ellipse cx="55" cy="54" rx="5" ry="6" fill="white"/>
-    <ellipse cx="75" cy="54" rx="5" ry="6" fill="white"/>
-    <ellipse cx="55" cy="55" rx="3.5" ry="4" fill="#2a1000"/>
-    <ellipse cx="75" cy="55" rx="3.5" ry="4" fill="#2a1000"/>
-    <circle cx="56" cy="53" r="1.2" fill="white"/>
-    <circle cx="76" cy="53" r="1.2" fill="white"/>
-    <!-- Eyebrows -->
-    <path d="M49 47 Q55 44 61 47" stroke="#1a0a00" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    <path d="M69 47 Q75 44 81 47" stroke="#1a0a00" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    <!-- Nose -->
-    <ellipse cx="65" cy="64" rx="4" ry="3" fill="#b5742e"/>
-    <!-- Mouth (neutral/professional) -->
-    <path d="M56 74 Q65 79 74 74" stroke="#8b5e2a" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <!-- Ears -->
-    <ellipse cx="39" cy="59" rx="5" ry="7" fill="#c68642"/>
-    <ellipse cx="91" cy="59" rx="5" ry="7" fill="#c68642"/>
-    <!-- Neck -->
-    <rect x="58" y="82" width="14" height="14" rx="4" fill="#c68642"/>
-    <!-- White shirt collar -->
-    <path d="M50 88 L58 96 L65 90 L72 96 L80 88" fill="white" stroke="white" stroke-width="1"/>
-    <!-- Suit jacket (dark grey) -->
-    <path d="M20 95 Q28 88 50 88 L65 100 L80 88 Q102 88 110 95 L115 185 Q65 195 15 185 Z" fill="#2b2b3b"/>
-    <!-- Lapels -->
-    <path d="M50 88 L58 96 L65 90" fill="#3d3d52" stroke="#2b2b3b" stroke-width="1"/>
-    <path d="M80 88 L72 96 L65 90" fill="#3d3d52" stroke="#2b2b3b" stroke-width="1"/>
-    <!-- Shirt visible below -->
-    <rect x="58" y="95" width="14" height="28" fill="white"/>
-    <!-- Tie (red) -->
-    <path d="M65 96 L61 108 L65 132 L69 108 Z" fill="#cc2200"/>
-    <polygon points="65,96 61,108 69,108" fill="#dd3311"/>
-    <!-- Suit buttons -->
-    <circle cx="65" cy="138" r="3" fill="#1a1a2a"/>
-    <circle cx="65" cy="152" r="3" fill="#1a1a2a"/>
-    <!-- Arms -->
-    <path d="M22 95 Q10 115 14 140" stroke="#2b2b3b" stroke-width="18" fill="none" stroke-linecap="round"/>
-    <path d="M108 95 Q120 115 116 140" stroke="#2b2b3b" stroke-width="18" fill="none" stroke-linecap="round"/>
-    <!-- Hands -->
-    <ellipse cx="14" cy="142" rx="9" ry="9" fill="#c68642"/>
-    <ellipse cx="116" cy="142" rx="9" ry="9" fill="#c68642"/>
-    <!-- Legs (dark trousers) -->
-    <path d="M42 182 Q39 190 38 198" stroke="#1e1e2e" stroke-width="18" fill="none" stroke-linecap="round"/>
-    <path d="M88 182 Q91 190 92 198" stroke="#1e1e2e" stroke-width="18" fill="none" stroke-linecap="round"/>
-    <!-- Shoes -->
-    <ellipse cx="37" cy="199" rx="15" ry="7" fill="#111"/>
-    <ellipse cx="93" cy="199" rx="15" ry="7" fill="#111"/>
-  </svg>
-  <button id="handin-btn" onclick="handIn()">📋 Hand In Homework</button>
-</div>
-
-<div id="speech-bubble">⭐ Well done!! ⭐</div>
-<div id="carrot">🥕</div>
-
-<button id="reset-btn" onclick="resetPage()" style="
+#reset-btn {
   margin-top: 40px;
   background: #888;
   color: white;
@@ -355,50 +270,207 @@ body {
   padding: 12px 28px;
   cursor: pointer;
   box-shadow: 0 4px 0 #555;
-  transition: transform 0.1s, box-shadow 0.1s;
-">🔄 Reset</button>
+  transition: transform 0.1s;
+}
+#reset-btn:hover { transform: translateY(-2px); }
+#reset-btn:active { transform: translateY(2px); }
+</style>
+</head>
+<body>
+
+<div id="homework-due">📚 HOMEWORK DUE! 📚</div>
+
+<div id="arrow-row">
+  <div id="arrow">👉</div>
+  <div id="ai-logo" onclick="startAI()">
+    <svg width="90" height="90" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="45" cy="45" r="42" fill="#1a1a2e" stroke="#5533ff" stroke-width="3"/>
+      <text x="45" y="52" text-anchor="middle" font-size="36" fill="#00eaff">🤖</text>
+      <circle r="5" fill="#ff44aa">
+        <animateMotion dur="2s" repeatCount="indefinite" path="M 45 8 A 37 37 0 1 1 44.9 8"/>
+      </circle>
+    </svg>
+    <div id="ai-logo-label">A·I·™</div>
+  </div>
+</div>
+
+<div id="ai-thinking"><span class="dots">🤔 Calculating</span></div>
+
+<div id="worksheet">
+  <h2>📝 Maths Homework — Year 7</h2>
+  <div id="questions-container"></div>
+  <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:8px;">
+    <button id="check-btn" onclick="checkAnswers()">✅ Check Answers</button>
+    <div id="result-msg"></div>
+  </div>
+</div>
+
+<div id="teacher-section">
+  <div id="teacher-label">Hand it to Mr. Amin 👇</div>
+  <div id="click-hint">(click him)</div>
+  <svg id="teacher-svg" width="130" height="200" viewBox="0 0 130 200" xmlns="http://www.w3.org/2000/svg" onclick="showHandIn()">
+    <ellipse cx="65" cy="48" rx="32" ry="30" fill="#1a0a00"/>
+    <circle cx="40" cy="32" r="10" fill="#1a0a00"/>
+    <circle cx="52" cy="26" r="10" fill="#1a0a00"/>
+    <circle cx="65" cy="24" r="10" fill="#1a0a00"/>
+    <circle cx="78" cy="26" r="10" fill="#1a0a00"/>
+    <circle cx="90" cy="32" r="10" fill="#1a0a00"/>
+    <circle cx="38" cy="44" r="9" fill="#1a0a00"/>
+    <circle cx="92" cy="44" r="9" fill="#1a0a00"/>
+    <ellipse cx="65" cy="58" rx="26" ry="28" fill="#c68642"/>
+    <ellipse cx="55" cy="54" rx="5" ry="6" fill="white"/>
+    <ellipse cx="75" cy="54" rx="5" ry="6" fill="white"/>
+    <ellipse cx="55" cy="55" rx="3.5" ry="4" fill="#2a1000"/>
+    <ellipse cx="75" cy="55" rx="3.5" ry="4" fill="#2a1000"/>
+    <circle cx="56" cy="53" r="1.2" fill="white"/>
+    <circle cx="76" cy="53" r="1.2" fill="white"/>
+    <path d="M49 47 Q55 44 61 47" stroke="#1a0a00" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M69 47 Q75 44 81 47" stroke="#1a0a00" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="65" cy="64" rx="4" ry="3" fill="#b5742e"/>
+    <path d="M56 74 Q65 79 74 74" stroke="#8b5e2a" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <ellipse cx="39" cy="59" rx="5" ry="7" fill="#c68642"/>
+    <ellipse cx="91" cy="59" rx="5" ry="7" fill="#c68642"/>
+    <rect x="58" y="82" width="14" height="14" rx="4" fill="#c68642"/>
+    <path d="M50 88 L58 96 L65 90 L72 96 L80 88" fill="white" stroke="white" stroke-width="1"/>
+    <path d="M20 95 Q28 88 50 88 L65 100 L80 88 Q102 88 110 95 L115 185 Q65 195 15 185 Z" fill="#2b2b3b"/>
+    <path d="M50 88 L58 96 L65 90" fill="#3d3d52" stroke="#2b2b3b" stroke-width="1"/>
+    <path d="M80 88 L72 96 L65 90" fill="#3d3d52" stroke="#2b2b3b" stroke-width="1"/>
+    <rect x="58" y="95" width="14" height="28" fill="white"/>
+    <path d="M65 96 L61 108 L65 132 L69 108 Z" fill="#cc2200"/>
+    <polygon points="65,96 61,108 69,108" fill="#dd3311"/>
+    <circle cx="65" cy="138" r="3" fill="#1a1a2a"/>
+    <circle cx="65" cy="152" r="3" fill="#1a1a2a"/>
+    <path d="M22 95 Q10 115 14 140" stroke="#2b2b3b" stroke-width="18" fill="none" stroke-linecap="round"/>
+    <path d="M108 95 Q120 115 116 140" stroke="#2b2b3b" stroke-width="18" fill="none" stroke-linecap="round"/>
+    <ellipse cx="14" cy="142" rx="9" ry="9" fill="#c68642"/>
+    <ellipse cx="116" cy="142" rx="9" ry="9" fill="#c68642"/>
+    <path d="M42 182 Q39 190 38 198" stroke="#1e1e2e" stroke-width="18" fill="none" stroke-linecap="round"/>
+    <path d="M88 182 Q91 190 92 198" stroke="#1e1e2e" stroke-width="18" fill="none" stroke-linecap="round"/>
+    <ellipse cx="37" cy="199" rx="15" ry="7" fill="#111"/>
+    <ellipse cx="93" cy="199" rx="15" ry="7" fill="#111"/>
+  </svg>
+  <button id="handin-btn" onclick="handIn()">📋 Hand In Homework</button>
+</div>
+
+<div id="speech-bubble"></div>
+<div id="reward"></div>
+
+<button id="reset-btn" onclick="resetPage()">🔄 Reset</button>
 
 <script>
-const answers = ['636', '210', '72', '563', '529', '7/8'];
-const ids = ['q1','q2','q3','q4','q5','q6'];
-let aiDone = false;
+let questions = [];
+let aiUsed = false;
+let teacherClicked = false;
+let allCorrect = false;
+
+function rand(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function generateQuestions() {
+  const types = ['add', 'sub', 'mul', 'div'];
+  // Pick 5 question types with at least one of each core type
+  const pool = ['add', 'sub', 'mul', 'div', types[rand(0, 3)]];
+  // Shuffle
+  pool.sort(() => Math.random() - 0.5);
+
+  questions = pool.map(type => {
+    let q, a;
+    if (type === 'add') {
+      const x = rand(10, 500), y = rand(10, 500);
+      q = `${x} + ${y}`; a = x + y;
+    } else if (type === 'sub') {
+      const x = rand(50, 500), y = rand(10, x);
+      q = `${x} − ${y}`; a = x - y;
+    } else if (type === 'mul') {
+      const x = rand(2, 13), y = rand(2, 13);
+      q = `${x} × ${y}`; a = x * y;
+    } else {
+      // Simple division: pick result first, then multiply
+      const result = rand(2, 12), divisor = rand(2, 12);
+      const dividend = result * divisor;
+      q = `${dividend} ÷ ${divisor}`; a = result;
+    }
+    return { q, a };
+  });
+}
+
+function renderQuestions() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  questions.forEach((item, i) => {
+    container.innerHTML += `
+      <div class="question">
+        <span class="question-text">${i + 1}) ${item.q} =</span>
+        <input class="answer-box" id="q${i}" type="text" inputmode="decimal" autocomplete="off" placeholder="?">
+        <span class="tick" id="tick${i}">✔</span>
+        <span class="cross" id="cross${i}">✘</span>
+      </div>`;
+  });
+}
 
 function startAI() {
-  if (aiDone) return;
+  if (aiUsed) return;
+  aiUsed = true;
   document.getElementById('ai-logo').style.pointerEvents = 'none';
   document.getElementById('ai-thinking').classList.add('show');
+  document.getElementById('check-btn').disabled = true;
 
-  // Fill answers one by one over ~3 seconds
-  const totalTime = 3000;
-  const delays = [400, 800, 1300, 1800, 2300, 2700];
-
-  ids.forEach((id, i) => {
+  const delays = [400, 800, 1300, 1800, 2300];
+  questions.forEach((item, i) => {
     setTimeout(() => {
-      const box = document.getElementById(id);
-      box.classList.add('filling');
+      const box = document.getElementById(`q${i}`);
+      box.classList.add('ai-filled');
       box.value = '';
-      // Type each character
-      const ans = answers[i];
+      const ans = String(item.a);
       let charIdx = 0;
-      const typeInterval = setInterval(() => {
-        box.value += ans[charIdx];
-        charIdx++;
-        if (charIdx >= ans.length) {
-          clearInterval(typeInterval);
-          box.classList.remove('filling');
-        }
+      const t = setInterval(() => {
+        box.value += ans[charIdx++];
+        if (charIdx >= ans.length) clearInterval(t);
       }, 80);
     }, delays[i]);
   });
 
   setTimeout(() => {
     document.getElementById('ai-thinking').classList.remove('show');
-    document.getElementById('teacher-section').classList.add('show');
-    aiDone = true;
-  }, totalTime + 300);
+    document.getElementById('check-btn').disabled = false;
+    // Auto-check after AI fills in
+    setTimeout(checkAnswers, 400);
+  }, 2700);
 }
 
-let teacherClicked = false;
+function checkAnswers() {
+  let correct = 0;
+  questions.forEach((item, i) => {
+    const box = document.getElementById(`q${i}`);
+    const tick = document.getElementById(`tick${i}`);
+    const cross = document.getElementById(`cross${i}`);
+    const userVal = parseFloat(box.value.trim());
+    if (userVal === item.a) {
+      box.classList.remove('wrong'); box.classList.add('correct');
+      tick.style.display = 'inline'; cross.style.display = 'none';
+      correct++;
+    } else if (box.value.trim() !== '') {
+      box.classList.remove('correct'); box.classList.add('wrong');
+      cross.style.display = 'inline'; tick.style.display = 'none';
+    }
+  });
+
+  const msg = document.getElementById('result-msg');
+  if (correct === questions.length) {
+    allCorrect = true;
+    msg.textContent = '🎉 All correct!';
+    msg.style.color = '#22aa44';
+    document.getElementById('teacher-section').classList.add('show');
+  } else if (correct > 0) {
+    msg.textContent = `${correct} / ${questions.length} correct — keep trying!`;
+    msg.style.color = '#cc6600';
+  } else {
+    msg.textContent = `Hmm, try again!`;
+    msg.style.color = '#cc0000';
+  }
+}
+
 function showHandIn() {
   if (teacherClicked) return;
   teacherClicked = true;
@@ -408,33 +480,44 @@ function showHandIn() {
 
 function handIn() {
   document.getElementById('handin-btn').style.display = 'none';
-  document.getElementById('speech-bubble').classList.add('show');
-  setTimeout(() => {
-    document.getElementById('carrot').classList.add('show');
-  }, 600);
+  const bubble = document.getElementById('speech-bubble');
+  const reward = document.getElementById('reward');
+
+  if (!aiUsed) {
+    bubble.textContent = '⭐ Well done!! You did it yourself! ⭐';
+    reward.textContent = '🍫';
+  } else {
+    bubble.textContent = '⭐ Well done!! ⭐';
+    reward.textContent = '🥕';
+  }
+
+  bubble.classList.add('show');
+  setTimeout(() => reward.classList.add('show'), 600);
 }
 
 function resetPage() {
-  // Clear answers
-  ids.forEach(id => {
-    const box = document.getElementById(id);
-    box.value = '';
-    box.classList.remove('filling');
-  });
-  // Reset AI
-  aiDone = false;
+  aiUsed = false;
+  teacherClicked = false;
+  allCorrect = false;
+
   document.getElementById('ai-logo').style.pointerEvents = 'auto';
   document.getElementById('ai-thinking').classList.remove('show');
-  // Reset teacher section
+  document.getElementById('check-btn').disabled = false;
+  document.getElementById('result-msg').textContent = '';
   document.getElementById('teacher-section').classList.remove('show');
   document.getElementById('click-hint').style.display = 'block';
-  document.getElementById('handin-btn').classList.remove('show');
-  document.getElementById('handin-btn').style.display = '';
-  teacherClicked = false;
-  // Reset ending
+  const hb = document.getElementById('handin-btn');
+  hb.classList.remove('show'); hb.style.display = '';
   document.getElementById('speech-bubble').classList.remove('show');
-  document.getElementById('carrot').classList.remove('show');
+  document.getElementById('reward').classList.remove('show');
+
+  generateQuestions();
+  renderQuestions();
 }
+
+// Init
+generateQuestions();
+renderQuestions();
 </script>
 </body>
 </html>
